@@ -2,10 +2,10 @@ import { v2 as cloudinary } from "cloudinary";
 // import fs from 'fs';
 // import path from 'path';
 import doctorModel from "../models/doctor.js";
-import adminModel from "../models/admin.js"
+import adminModel from "../models/admin.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import contactMessageModel from '../models/contactMessage.js'
+import contactMessageModel from "../models/contactMessage.js";
 
 // API for adding Doctor
 
@@ -210,7 +210,6 @@ const updateDoctorProfile = async (req, res) => {
   }
 };
 
-
 // Admin Login
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -283,7 +282,7 @@ const deleteReview = async (req, res) => {
   try {
     const reviewId = req.params.id;
 
-    const doctor = await doctorModel.findOne({ "reviews._id" : reviewId});
+    const doctor = await doctorModel.findOne({ "reviews._id": reviewId });
     if (!doctor) {
       return res
         .status(404)
@@ -319,8 +318,8 @@ const deleteReview = async (req, res) => {
   }
 };
 
+import transpoter from "../config/nodemailer.js";
 const sendMessage = async (req, res) => {
-
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
@@ -331,21 +330,31 @@ const sendMessage = async (req, res) => {
   }
 
   try {
-
     const newMessage = new contactMessageModel({ name, email, message });
     await newMessage.save();
+
+    // Sending Welcome Email
+    const mailOptions = {
+      from: `"AI HealthSense" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: "We received your message!",
+      html: `
+        <p>Dear <strong>${name}</strong>,</p>
+        <p>Thank you for contacting us. We’ve received your message and will respond as soon as possible.</p>
+        <p><em>Your message:</em></p>
+        <blockquote>${message}</blockquote>
+        <p>Regards,<br/>AI HealthSense Team</p>
+      `
+    };
+
+    await transpoter.sendMail(mailOptions);
+
     return res.json({ success: true });
-    
   } catch (error) {
-    console.error('Error saving message:', error);
+    console.error("Error saving message:", error);
     res.json({ success: false, message: error.message });
   }
-
-
-
-}
-
-
+};
 
 export {
   addDoctor,
@@ -357,5 +366,5 @@ export {
   adminLogin,
   deleteDoctor,
   deleteReview,
-  sendMessage
+  sendMessage,
 };
