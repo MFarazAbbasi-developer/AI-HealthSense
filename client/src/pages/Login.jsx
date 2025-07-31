@@ -64,7 +64,7 @@ const Login = () => {
         {/* Logo */}
         <img
           className="w-40 mx-auto mb-6"
-          src="/src/assets/healthsenselogo.jpg"
+          src={assets.healthsenselogo}
           alt="Logo"
         />
 

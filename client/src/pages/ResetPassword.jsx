@@ -99,7 +99,7 @@ const ResetPassword = () => {
           {/* Logo */}
           <img
             className="w-40 mx-auto mb-6"
-            src="/src/assets/healthsenselogo.jpg"
+            src={assets.healthsenselogo}
             alt="Logo"
           />
 
@@ -138,7 +138,7 @@ const ResetPassword = () => {
           {/* Logo */}
           <img
             className="w-40 mx-auto mb-6"
-            src="/src/assets/healthsenselogo.jpg"
+            src={assets.healthsenselogo}
             alt="Logo"
           />
           <h1 className="text-3xl font-semibold text-black text-center mb-3">
@@ -178,7 +178,7 @@ const ResetPassword = () => {
           {/* Logo */}
           <img
             className="w-40 mx-auto mb-6"
-            src="/src/assets/healthsenselogo.jpg"
+            src={assets.healthsenselogo}
             alt="Logo"
           />
           <h1 className="text-3xl font-semibold text-black text-center mb-3">

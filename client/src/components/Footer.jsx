@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
+import { assets } from '../assets/assets'
 
 export default function Footer() {
   return (
@@ -24,7 +25,7 @@ export default function Footer() {
     <div>
       <img
         className="w-36 mb-4"
-        src="/src/assets/healthsenselogo.jpg"
+        src={assets.healthsenselogo}
         alt="AI HealthSense Logo"
       />
       <p className="text-sm text-gray-300 leading-relaxed">
