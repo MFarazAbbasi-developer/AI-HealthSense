@@ -13,7 +13,7 @@ import { AppContext } from "../context/AppContext";
 const Contact = () => {
   const { backendUrl } = useContext(AppContext);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,23 +22,24 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
-    if (!form.name || !form.email || !form.message) {
-      setStatus("Please fill in all fields.");
-      return;
-    }
+    setLoading(true);
 
     try {
-      const { data } = await axios.post(`${backendUrl}/api/admin/send-message`, form);
+      const { data } = await axios.post(
+        `${backendUrl}/api/admin/send-message`,
+        form
+      );
 
       if (data.success) {
         toast.success("Message sent successfully!");
-    setForm({ name: "", email: "", message: "" });
+        setForm({ name: "", email: "", message: "" });
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,10 +119,41 @@ const Contact = () => {
 
             <button
               type="submit"
-              className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300 flex items-center gap-2"
+              disabled={loading}
+              className={`bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300 flex items-center gap-2 ${
+                loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-700"
+              }`}
             >
-              <FaPaperPlane />
-              Send Message
+              {loading ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <FaPaperPlane />
+                  Send Message
+                </>
+              )}
             </button>
           </form>
         </div>
