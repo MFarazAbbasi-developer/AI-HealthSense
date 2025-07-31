@@ -31,6 +31,7 @@ import Nephrologist from './Nephrologist.png'
 import supervisor from './supervisor.jpg'
 import teamMemberMale from './teamMemberMale.jpg'
 import teamMemberFemale from './teamMemberFemale.avif'
+import faraz from './faraz.jpg'
 
 
 export const assets = {
@@ -67,4 +68,5 @@ export const assets = {
     supervisor,
     teamMemberMale,
     teamMemberFemale,
+    faraz
 }

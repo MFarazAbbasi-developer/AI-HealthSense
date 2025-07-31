@@ -71,7 +71,7 @@ export default function Footer() {
         <a href="#" className="hover:text-blue-600 transition"><FaFacebook /></a>
         <a href="#" className="hover:text-gray-400 transition"><FaXTwitter /></a>
         <a href="#" className="hover:text-pink-500 transition"><FaInstagram /></a>
-        <a href="#" className="hover:text-blue-700 transition"><FaLinkedin /></a>
+        <a href="https://www.linkedin.com/in/muhammadfaraz-abbasi/" target="blank" className="hover:text-blue-700 transition"><FaLinkedin /></a>
         <a href="#" className="hover:text-red-600 transition"><FaYoutube /></a>
         <a href="#" className="hover:text-green-500 transition"><FaWhatsapp /></a>
       </div>
