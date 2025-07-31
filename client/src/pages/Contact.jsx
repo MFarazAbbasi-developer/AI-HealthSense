@@ -1,19 +1,45 @@
-import React, { useState } from "react";
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaUser, FaPaperPlane } from "react-icons/fa";
+import axios from "axios";
+import React, { useState, useContext } from "react";
+import {
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaUser,
+  FaPaperPlane,
+} from "react-icons/fa";
 import { toast } from "react-toastify";
+import { AppContext } from "../context/AppContext";
 
 const Contact = () => {
+  const { backendUrl } = useContext(AppContext);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here (optional: use email service or backend)
-    toast.success("Message sent successfully!");
+
+    // Basic validation
+    if (!form.name || !form.email || !form.message) {
+      setStatus("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const { data } = await axios.post(`${backendUrl}/api/admin/send-message`, form);
+
+      if (data.success) {
+        toast.success("Message sent successfully!");
     setForm({ name: "", email: "", message: "" });
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -44,7 +70,10 @@ const Contact = () => {
               <FaMapMarkerAlt className="text-red-500 text-xl mt-1" />
               <div>
                 <p className="font-semibold">Address</p>
-                <p>Software Engineering Department, QUEST Nawabshah, Sindh, Pakistan</p>
+                <p>
+                  Software Engineering Department, QUEST Nawabshah, Sindh,
+                  Pakistan
+                </p>
               </div>
             </div>
           </div>

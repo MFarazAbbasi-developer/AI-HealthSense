@@ -5,6 +5,7 @@ import doctorModel from "../models/doctor.js";
 import adminModel from "../models/admin.js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import contactMessageModel from '../models/contactMessage.js'
 
 // API for adding Doctor
 
@@ -318,6 +319,32 @@ const deleteReview = async (req, res) => {
   }
 };
 
+const sendMessage = async (req, res) => {
+
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.json({
+      success: false,
+      message: "All fields are required.",
+    });
+  }
+
+  try {
+
+    let newMessage = await contactMessageModel.create({ name, email, message})
+
+    return res.json({ success: true });
+    
+  } catch (error) {
+    console.error('Error saving message:', error);
+    res.json({ success: false, message: error.message });
+  }
+
+
+
+}
+
 
 
 export {
@@ -329,5 +356,6 @@ export {
   updateDoctorProfile,
   adminLogin,
   deleteDoctor,
-  deleteReview
+  deleteReview,
+  sendMessage
 };

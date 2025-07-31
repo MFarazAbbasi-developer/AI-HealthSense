@@ -1,6 +1,6 @@
 import express from 'express';
 import upload from '../middlewares/multer.js';
-import { addDoctor, allDoctors, addReview, adminLogin, deleteDoctor, deleteReview } from '../controllers/adminController.js';
+import { addDoctor, allDoctors, addReview, adminLogin, deleteDoctor, deleteReview, sendMessage } from '../controllers/adminController.js';
 
 const adminRouter = express.Router();
 
@@ -33,6 +33,10 @@ adminRouter.post('/login', adminLogin)
 import isAdmin from '../middlewares/isAdmin.js';
 adminRouter.delete('/delete-doctor/:id', userAuth, isAdmin, deleteDoctor)
 adminRouter.delete('/delete-review/:id', userAuth, isAdmin, deleteReview)
+
+
+// For Contact Us Form
+adminRouter.post('/send-message', sendMessage)
 
 
 export default adminRouter;
