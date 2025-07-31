@@ -19,7 +19,7 @@ connectDB();
 // Doctors
 connectCloudinary()
 
-const allowedOrigins = ['https://ai-healthsense.vercel.app/'];
+const allowedOrigins = ['https://ai-healthsense.vercel.app'];
 
 // Middlewares
 app.use(express.json());
