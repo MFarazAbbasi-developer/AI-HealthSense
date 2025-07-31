@@ -332,8 +332,8 @@ const sendMessage = async (req, res) => {
 
   try {
 
-    let newMessage = await contactMessageModel.create({ name, email, message})
-
+    const newMessage = new contactMessageModel({ name, email, message });
+    await newMessage.save();
     return res.json({ success: true });
     
   } catch (error) {
