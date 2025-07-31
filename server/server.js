@@ -10,8 +10,7 @@ import userRouter from "./routes/userRoutes.js";
 import connectCloudinary from "./config/cloudinary.js";
 import adminRouter from "./routes/adminRoutes.js";
 
-// For Render
-app.set('trust proxy', 1);
+
 
 // App config
 const app = express();
