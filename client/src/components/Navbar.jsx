@@ -49,7 +49,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   // const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="sticky top-0 z-40 bg-white shadow-md h-18 w-full flex justify-between items-center text-sm py-4 border-b border-b-gray-400 sm:p-6 sm:px-24 px-6">
       {/* HAMBURGER ON SMALL SCREENS (LEFT SIDE) */}
@@ -94,7 +94,10 @@ const Navbar = () => {
 
       {/* USER / LOGIN BUTTON */}
       {userData ? (
-        <div className="relative group cursor-pointer" onClick={() => setIsOpen(prev => !prev)}>
+        <div
+          className="relative group cursor-pointer"
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
           {userData.role === "patient" ? (
             <div className="w-8 h-8 flex justify-center items-center rounded-full bg-black text-white ">
               {userData.name[0].toUpperCase()}
@@ -115,7 +118,12 @@ const Navbar = () => {
             </div>
           )}
 
-          <div onClick={() => setIsOpen(prev => !prev)} className={`absolute group-hover:block ${isOpen ? "block" : "hidden"}  top-0 right-0 z-10 text-gray-700 font-medium rounded pt-10`}>
+          <div
+            onClick={() => setIsOpen((prev) => !prev)}
+            className={`absolute group-hover:block ${
+              isOpen ? "block" : "hidden"
+            }  top-0 right-0 z-10 text-gray-700 font-medium rounded pt-10`}
+          >
             <ul className="list-none m-0 p-2 bg-gray-100 text-sm">
               {!userData.isAccountVerified && (
                 <li
@@ -125,16 +133,18 @@ const Navbar = () => {
                   Verify Email
                 </li>
               )}
-              <li
-                onClick={() => {
-                  userData.role === "doctor"
-                    ? navigate(`/doctors/profile/${userData.userId}`)
-                    : navigate("/my-profile");
-                }}
-                className="py-1 px-2 hover:bg-gray-200  cursor-pointer"
-              >
-                My Profile
-              </li>
+              {userData.role === "doctor" && (
+                <li
+                  onClick={() => {
+                    userData.role === "doctor"
+                      ? navigate(`/doctors/profile/${userData.userId}`)
+                      : navigate("/my-profile");
+                  }}
+                  className="py-1 px-2 hover:bg-gray-200  cursor-pointer"
+                >
+                  My Profile
+                </li>
+              )}
               <li
                 onClick={logoutHandler}
                 className="py-1 px-2 text-red-500 hover:bg-gray-200 cursor-pointer pr-10"
